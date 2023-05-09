@@ -1,0 +1,34 @@
+.input-area {
+    background-color: rgba(170, 170, 170, 0.173);
+    padding: 1rem 1.2rem;
+    border-radius: .3rem;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-area svg {
+    color: var(--white-400);
+}
+
+.input-area div {
+    display: flex;
+    align-items: center;
+}
+
+.input {
+    border: 0;
+    background: transparent;
+    color: var(--white-400);
+
+    font-size: 1.1rem;
+    font-weight: 400;
+    padding: .5rem .6rem;
+}
+
+.button-search {
+    background: transparent;
+    border: 0;
+}
