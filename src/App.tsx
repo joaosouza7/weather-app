@@ -1,8 +1,15 @@
+import Card from "./components/Card";
+import Main from "./components/Main";
+import Weather from "./components/Weather";
 
 function App() {
   return (
     <div>
-      <h1>Hello Word!</h1>
+      <Main>
+        <Card>
+          <Weather/>
+        </Card>
+      </Main>
     </div>
   );
 }
