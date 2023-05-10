@@ -1,7 +1,7 @@
 .bg-img {
     width: 100%;
     max-width: 380px;
-    max-height: 550px;
+    min-height: 416px;
     overflow: hidden;
 
     background-position: center;
