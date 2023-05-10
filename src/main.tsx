@@ -3,8 +3,12 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 
+import { WeatherProvider } from './contexts/WeatherContext.tsx';
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <App />
+    <WeatherProvider>
+      <App />
+    </WeatherProvider>
   </React.StrictMode>,
 )
