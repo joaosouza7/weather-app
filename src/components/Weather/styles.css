@@ -44,8 +44,8 @@
 
 .icon-area > p {
     font-size: 1.1rem;
-    font-weight: 300;
-    color: #cfcbc0;
+    font-weight: 400;
+    color: #e2dfd5;
 }
 
 .info-weather {
@@ -64,18 +64,18 @@
 }
 
 .single > svg {
-    color: #585550;
+    color: #cfcbc0;
 }
 
 .single > span {
     margin-left: .5rem;
-    color: #cfcbc0;
+    color: #e2dfd5;
 }
 
 .temp > strong {
     font-size: 3.5rem;
     font-weight: 400;
-    color: #C0BDB8;
+    color: #e2dfd5;
 }
 
 .temp .deg {
