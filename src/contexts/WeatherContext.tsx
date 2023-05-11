@@ -1,14 +1,14 @@
 import { createContext, useState, ReactNode } from 'react';
-import axios from 'axios';
+
+import useApi from '../hooks/useApi';
 
 type WeatherContextData = {
     place: string;
     setPlace: React.Dispatch<React.SetStateAction<string>>;
     isLoading: boolean;
     weather: Weather;
-    getWeather: (place: string) => Promise<void>;
-    getImage: (name: string) => Promise<void>;
-    imgLocate: Image;
+    handleGetWeather: () => Promise<void>;
+    imgLocate: ImageLocate;
     weatherStateImg: string;
     erro: boolean;
 }
@@ -17,10 +17,9 @@ type WeatherProviderProps = {
     children: ReactNode;
 }
 
-type Image = {
+type ImageLocate = {
     urlImg?: string;
     alt?: string;
-    erro?: boolean;
 } | undefined;
 
 interface Weather {
@@ -41,68 +40,42 @@ export function WeatherProvider({ children }: WeatherProviderProps) {
     const [place, setPlace] = useState("");
     const [weather, setWeather] = useState<Weather>({});
     const [weatherStateImg, setWeatherStateImg] = useState("");
-    const [imgLocate, setImgLocate] = useState<Image>();
+    const [imgLocate, setImgLocate] = useState<ImageLocate>();
     const [isLoading, setIsLoading] = useState(false);
     const [erro, setErro] = useState(false);
 
-    async function getWeather(place: string) {
-        if(!place) return setErro(true);
+    const { getWeather, getImage } = useApi();
 
-        try {
-            const response = await axios.get(
-                `https://api.openweathermap.org/data/2.5/weather?q=${place}&units=metric&lang=pt_br&appid=${import.meta.env.VITE_API_KEY_WEATHER}`
-            );
+    async function handleGetWeather() {
+        if(place.trim().length === 0) return;
+        setIsLoading(false);
+        setErro(false);
 
-            setWeather({
-                name: response.data?.name,
-                country: response.data?.sys.country,
-                weatherState: response.data?.weather[0].main,
-                description: response.data?.weather[0].description,
-                humidity: response.data?.main.humidity,
-                wind: response.data?.wind.speed,
-                temperature: parseInt(response.data?.main.temp),
-            });
+        const weather = await getWeather(place.trim());
 
-            await getImage(weather.name);
+        setWeather(weather);
 
-            handleWeatherImgState(weather.weatherState);
-            setIsLoading(false);
-            setErro(false);
-            
-        } catch (error) {
+        if(weather.erro === true) {
             setImgLocate(undefined);
             setErro(true);
             setWeather({});
             setIsLoading(false);
+            return;
         }
 
+        await handleGetImage(weather.name);
+        handleWeatherImgState(weather.weatherState);
+
+        setIsLoading(false);
     }
 
-    async function getImage(name: string | undefined) {
-        if(!name) return setErro(true);
+    async function handleGetImage(name: string | undefined) {
+        if(place.trim().length === 0) return;
 
-        try {
-            const response = await axios.get(
-                `https://api.unsplash.com/search/photos?page=1&orientation=portrait&client_id=${import.meta.env.VITE_API_KEY_UNSPLASH}&query=${name}`
-            );
+        const img = await getImage(name);
 
-            if (response.data.total === 0) return setErro(true);
-
-            // Gerar número aleatório
-            const randomNumber = await Math.floor(
-                Math.random() * (response.data.results.length + 1)
-            );
-
-            setImgLocate({
-                urlImg: response.data.results[randomNumber].urls.small,
-                alt: response.data.results[randomNumber].alt_description,
-            });
-
-            if(imgLocate?.erro === true) return;
-            
-        } catch (error) {
-          setErro(true);
-        }
+        if(img.erro === true) return;
+        setImgLocate(img);
     }
 
     function handleWeatherImgState(state: string | undefined) {
@@ -145,8 +118,7 @@ export function WeatherProvider({ children }: WeatherProviderProps) {
                 isLoading,
                 erro,
                 imgLocate,
-                getWeather,
-                getImage
+                handleGetWeather,
             }}
         >
             {children}
