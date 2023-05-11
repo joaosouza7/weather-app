@@ -8,9 +8,7 @@ function Input() {
         <>
             <div className="input-area">
                 <div>
-                    <span>
-                        <HiLocationMarker size={20} />
-                    </span>
+                    <HiLocationMarker size={20} />
                     <input type="text" className='input' placeholder='Entre com a localização...' />
                 </div>
 
