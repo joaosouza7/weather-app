@@ -1,4 +1,5 @@
 import { createContext, useState, ReactNode } from 'react';
+import axios from 'axios';
 
 type WeatherContextData = {
     place: string;
@@ -8,18 +9,18 @@ type WeatherContextData = {
     getWeather: (place: string) => Promise<void>;
     getImage: (name: string) => Promise<void>;
     weatherStateImg: string;
-    error: boolean;
+    erro: boolean;
 }
 
 type WeatherProviderProps = {
     children: ReactNode;
 }
 
-interface Image {
+type Image = {
     urlImg?: string;
     alt?: string;
-    error?: boolean;
-}
+    erro?: boolean;
+} | undefined;
 
 interface Weather {
     name?: string;
@@ -29,7 +30,7 @@ interface Weather {
     wind?: number;
     humidity?: number;
     temperature?: number;
-    error?: boolean;
+    erro?: boolean;
 }
 
 export const WeatherContext = createContext({} as WeatherContextData);
@@ -39,15 +40,73 @@ export function WeatherProvider({ children }: WeatherProviderProps) {
     const [place, setPlace] = useState("");
     const [weather, setWeather] = useState<Weather>({});
     const [weatherStateImg, setWeatherStateImg] = useState("");
+    const [imgLocate, setImgLocate] = useState<Image>();
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [erro, setErro] = useState(false);
 
     async function getWeather(place: string) {
-        alert("Weather " + place);
+        if(!place) return;
+
+        try {
+            const response = await axios.get(
+                `https://api.openweathermap.org/data/2.5/weather?q=${place}&units=metric&lang=pt_br&appid=${import.meta.env.VITE_API_KEY_WEATHER}`
+            );
+
+            setWeather({
+                name: response.data?.name,
+                country: response.data?.sys.country,
+                weatherState: response.data?.weather[0].main,
+                description: response.data?.weather[0].description,
+                humidity: response.data?.main.humidity,
+                wind: response.data?.wind.speed,
+                temperature: parseInt(response.data?.main.temp),
+            });
+
+            handleWeatherImgState(weather.weatherState);
+            setIsLoading(false);
+            setErro(false);
+            
+        } catch (error) {
+            setImgLocate(undefined);
+            setErro(true);
+            setWeather({});
+            setIsLoading(false);
+            return;
+        }
+
     }
 
     async function getImage(name: string) {
         alert("Image " + name);
+    }
+
+    function handleWeatherImgState(state: string | undefined) {
+        switch (state) {
+            case "Clear":
+                setWeatherStateImg("/weather-img/clear-day.svg");
+                break;
+            case "Thunderstorm":
+                setWeatherStateImg("/weather-img/thunderstorms.svg");
+                break;
+            case "Drizzle":
+                setWeatherStateImg("/weather-img/shower-rain.svg");
+                break;
+            case "Rain":
+                setWeatherStateImg("/weather-img/rain.svg");
+                break;
+            case "Snow":
+                setWeatherStateImg("/weather-img/snow.svg");
+                break;
+            case "Haze":
+                setWeatherStateImg("/weather-img/haze.svg");
+                break;
+            case "Clouds":
+                setWeatherStateImg("/weather-img/few-clouds.svg");
+                break;
+            default:
+                setWeatherStateImg("/weather-img/cloudy.svg");
+                break;
+        }
     }
 
 
@@ -59,7 +118,7 @@ export function WeatherProvider({ children }: WeatherProviderProps) {
                 weather,
                 weatherStateImg,
                 isLoading,
-                error,
+                erro,
                 getWeather,
                 getImage
             }}

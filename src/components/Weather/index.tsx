@@ -1,6 +1,6 @@
 import { RiWindyLine, RiDropLine } from 'react-icons/ri';
 
-import weatherIcon from '../../assets/clear-day.svg';
+import weatherIcon from '../../../public/weather-img/clear-day.svg';
 
 import './styles.css';
 
