@@ -48,7 +48,7 @@ export function WeatherProvider({ children }: WeatherProviderProps) {
 
     async function handleGetWeather() {
         if(place.trim().length === 0) return;
-        setIsLoading(false);
+        setIsLoading(true);
         setErro(false);
 
         const weather = await getWeather(place.trim());
