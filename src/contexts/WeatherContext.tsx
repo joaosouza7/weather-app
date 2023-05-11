@@ -8,6 +8,7 @@ type WeatherContextData = {
     weather: Weather;
     getWeather: (place: string) => Promise<void>;
     getImage: (name: string) => Promise<void>;
+    imgLocate: Image;
     weatherStateImg: string;
     erro: boolean;
 }
@@ -45,7 +46,7 @@ export function WeatherProvider({ children }: WeatherProviderProps) {
     const [erro, setErro] = useState(false);
 
     async function getWeather(place: string) {
-        if(!place) return;
+        if(!place) return setErro(true);
 
         try {
             const response = await axios.get(
@@ -62,6 +63,8 @@ export function WeatherProvider({ children }: WeatherProviderProps) {
                 temperature: parseInt(response.data?.main.temp),
             });
 
+            await getImage(weather.name);
+
             handleWeatherImgState(weather.weatherState);
             setIsLoading(false);
             setErro(false);
@@ -71,13 +74,35 @@ export function WeatherProvider({ children }: WeatherProviderProps) {
             setErro(true);
             setWeather({});
             setIsLoading(false);
-            return;
         }
 
     }
 
-    async function getImage(name: string) {
-        alert("Image " + name);
+    async function getImage(name: string | undefined) {
+        if(!name) return setErro(true);
+
+        try {
+            const response = await axios.get(
+                `https://api.unsplash.com/search/photos?page=1&orientation=portrait&client_id=${import.meta.env.VITE_API_KEY_UNSPLASH}&query=${name}`
+            );
+
+            if (response.data.total === 0) return setErro(true);
+
+            // Gerar número aleatório
+            const randomNumber = await Math.floor(
+                Math.random() * (response.data.results.length + 1)
+            );
+
+            setImgLocate({
+                urlImg: response.data.results[randomNumber].urls.small,
+                alt: response.data.results[randomNumber].alt_description,
+            });
+
+            if(imgLocate?.erro === true) return;
+            
+        } catch (error) {
+          setErro(true);
+        }
     }
 
     function handleWeatherImgState(state: string | undefined) {
@@ -119,6 +144,7 @@ export function WeatherProvider({ children }: WeatherProviderProps) {
                 weatherStateImg,
                 isLoading,
                 erro,
+                imgLocate,
                 getWeather,
                 getImage
             }}
