@@ -13,6 +13,9 @@
     
     border-radius: .3rem;
     transition: all;
+
+    transition: all 2s;
+    animation: fade 2s ease 0s 1 normal forwards;
 }
 
 .bg {
@@ -27,4 +30,14 @@
 
     background-color: rgba(36,34,28,.6);
     color: var(--white-400);
+}
+
+@keyframes fade {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
 }

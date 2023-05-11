@@ -4,6 +4,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    
+    transition: all 4s;
+    animation: fade 4s ease 0s 1 normal forwards;
 }
 
 .info-location {
@@ -84,4 +87,14 @@
     padding-left: .2rem;
     position: relative;
     top: -32px;
+}
+
+@keyframes fade {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
 }
