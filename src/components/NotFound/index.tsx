@@ -1,4 +1,4 @@
-import notFound from '../../assets/not-found.svg';
+import notFound from '../../../public/not-found.svg';
 
 import './styles.css';
 
