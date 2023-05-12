@@ -23,23 +23,23 @@
     <a href="https://weather-app-joaosouza7.vercel.app/"><strong>Explore o projeto »</strong></a>
     <br />
     <br />
-    <a href="#sobre-o-projeto">Sobre</a> •
+    <a href="#sobre">Sobre</a> •
     <a href="#features">Features</a> • 
     <a href="#tecnologias">Tecnologias</a> • 
-    <a href="#preview-do-projeto">Preview</a> • 
+    <a href="#preview">Preview</a> • 
     <a href="#como-executar">Como executar?</a> • 
-    <a href="#licença">Licença</a> •
+    <a href="#licenca">Licença</a> •
     <a href="#contato">Contato</a>
   </p>
 </div>
 
 <!--Sobre o Projeto-->
-## 💻 Sobre o projeto
+<h2 id="sobre">💻 Sobre o projeto</h2>
 
 🌥️ Weather App - é um aplicativo React que permite ao usuário consultar as condições meteorólogicas de um lugar específico, e também exibir uma imagem aleatória de acordo com a localização buscada. Para obter essas informações, foram utilizadas três APIs externas: [OpenWeatherMap][openWeather-url], [Unsplash][unsplash-url] e [CountryFlag][countryFlags-url].
 
 <!--Features-->
-## ✅ Features
+<h2 id="features">✅ Features</h2>
 
 Ao entrar no aplicativo é possível ver um campo de pesquisa, onde o usuário deve digitar o nome da localização desejada. Em seguida, o aplicativo buscará as informações meteorólogicas, bem como a imagem do local e irá exibi-las ao usuário. 
 
@@ -55,7 +55,7 @@ As seguintes informações são exibidas:
 - [x] Umidade relativa do ar (%)
 
 <!--Tecnologias-->
-## 🛠 Tecnologias
+<h2 id="tecnologias">🛠 Tecnologias utilizadas</h2>
 
 As seguintes ferramentas foram utilizadas no desenvolvimento do projeto.
 
@@ -66,14 +66,14 @@ As seguintes ferramentas foram utilizadas no desenvolvimento do projeto.
 * [Storyset Web Illustrations][storyset-url]
 
 <!--Preview do projeto-->
-## 🔎 Preview do projeto
+<h2 id="preview">🔎 Preview do projeto</h2>
 
 <div align="center">
   <img alt="Preview" title="Preview" src="public/preview.png" />
 </div>
 
 <!--Como executar-->
-## 🚀 Como executar o projeto?
+<h2 id="como-executar">🚀 Como executar o projeto?</h2>
 
 ### Pré-requisitos
 
@@ -99,7 +99,7 @@ $ yarn dev | npm run dev
 
 > ⚠️ Crie um arquivo `.env` na raiz do seu projeto e adicione suas **Keys** da API do OpenWeather e do Unsplash:
 
-```bash
+```.env
 # Se criou o projeto com create-react-app
 REACT_APP_NOME_DA_VARIAVEL=key-OpenWeatherMap
 REACT_APP_NOME_DA_VARIAVEL=key-Unsplash
@@ -110,12 +110,12 @@ VITE_NOME_DA_VARIAVEL=key-Unsplash
 ```
 
 <!--Licença-->
-## 📝 Licença
+<h2 id="licenca">📝 Licença</h2>
 
 Esse projeto está sob a licença [MIT][license-url]. Veja o arquivo `LICENSE` para mais detalhes.
 
 <!--Contato-->
-## ✉️ Contato
+<h2 id="contato">✉️ Contato</h2> 
 
 João Souza - [Linkedin](https://www.linkedin.com/in/joaosouzadesenvolvedorweb) - joaoosouza07@gmail.com
 
