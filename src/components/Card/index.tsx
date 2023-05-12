@@ -1,4 +1,6 @@
-import { ReactNode } from 'react';
+import { useContext, ReactNode } from 'react';
+
+import { WeatherContext } from '../../contexts/WeatherContext';
 
 import './styles.css';
 
@@ -7,8 +9,12 @@ interface CardProps {
 }
 
 function Card({ children }: CardProps) {
+
+    const { imgLocate } = useContext(WeatherContext);
+    const imgUrl = imgLocate?.urlImg;
+
     return(
-        <div className="bg-img">
+        <div className="bg-img" style={{ backgroundImage: `url(${imgUrl})` }}>
             <div className="bg">
                 {children}
             </div>
